@@ -18,7 +18,7 @@ app.use(express.static('public/upload'))
 
 
 // routes
-app.use('/api/v1',userRoute)  
+app.use('/api/v1/user',userRoute)  
 
 
 
