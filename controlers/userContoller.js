@@ -20,7 +20,6 @@ const createUser=async(req,res)=>{
             })
 
         }else{
-            console.log("roshan karki 3 ");
           return   res.status(400).json({
                 sucess:false,
                 message:"all the fields are required"
@@ -47,11 +46,9 @@ const createUser=async(req,res)=>{
 
 const loginUser=async(req,res)=>{
     const {email,password}=req.body
-    console.log(email,password);
     try {
         if(email && password){
             const user=await User.findOne({email})
-            console.log(user);
             if(!user){
                return  res.status(400).json({
                     sucess:false,

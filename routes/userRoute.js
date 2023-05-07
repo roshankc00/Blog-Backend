@@ -8,5 +8,7 @@ router.post('/register',upload.single('profile'),createUser)
 router.post('/login',loginUser)
 
 
+
+
 module.exports=router     
 

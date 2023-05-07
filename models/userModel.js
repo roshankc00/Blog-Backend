@@ -17,6 +17,11 @@ const userSchema=mongoose.Schema({
     profile:{
         type:String
     },
+    role:{
+        type:String,
+        default:"user",
+
+    }
 },{timestamps:true})
 
 
