@@ -25,11 +25,12 @@ const checkAuth=(req,res,next)=>{
 
 
 
+
 // checking weather the user is admin or not 
 const isAdmin=async(req,res,next)=>{
+    console.log(req.user.id);
     const id=req.user.id
    const user= await User.findById(id)
-   console.log(typeof(user.role));
    if(user.role!=="admin"){
     return res.status(400).json({
         sucess:false,

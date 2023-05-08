@@ -50,17 +50,27 @@ const loginUser=async(req,res)=>{
         if(email && password){
             const user=await User.findOne({email})
             if(!user){
-               return  res.status(400).json({
+                return  res.status(400).json({
                     sucess:false,
                     message:"unable to login the user"
                 })
             }
             const compare=await bcrypt.compare(password,user.password)
+            if(!compare){
+                return  res.status(400).json({
+                    sucess:false,
+                    message:"unable to login the user"
+                })
+
+            }
             const obj={
                 id:user.id
             }
+            console.log(compare);
             if(compare){
+                console.log(email,password);
                 const token=jwt.sign(obj,process.env.SECRET)
+                console.log("nepal");
                 return res.json({token})
             }
         }else{
@@ -80,13 +90,71 @@ const loginUser=async(req,res)=>{
 }
 
 
+// block the user 
+const blockUser=async(req,res)=>{
+    const id=req.params.id
+    try {
+        const user=await User.findById(id)
+        if(!user){
+            return res.status(400).json({
+                sucess:false,
+                message:"no such user exists",
+                
+            })
+        }
+
+
+        const blockuser=await User.findByIdAndUpdate(id,{
+            isblocked:true
+        },{new:true})
+        res.status(200).json({
+            sucess:true,
+            message:"the user has been blocked sucessfully",
+            blockuser
+        })
+        
+    } catch (error) {
+        return  res.status(500).json({
+             sucess:true,
+             message:"internal server errror"
+         })
+     }
+}
 
 
 
 
 
+// unblock the user 
+const unblockUser=async(req,res)=>{
+    const id=req.params.id
+    try {
+        const user=await User.findById(id)
+        if(!user){
+            return res.status(400).json({
+                sucess:false,
+                message:"no such user exists",
+                
+            })
+        }
 
 
+        const blockuser=await User.findByIdAndUpdate(id,{
+            isblocked:false
+        },{new:true})
+        res.status(200).json({
+            sucess:true,
+            message:"the user has been unblocked sucessfully",
+            blockuser
+        })
+        
+    } catch (error) {
+        return  res.status(500).json({
+             sucess:true,
+             message:"internal server errror"
+         })
+     }
+}
 
 
 
@@ -96,7 +164,9 @@ const loginUser=async(req,res)=>{
 
 module.exports={
     createUser,
-    loginUser
+    loginUser,
+    blockUser,
+    unblockUser
 }
 
 

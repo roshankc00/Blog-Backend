@@ -15,13 +15,17 @@ const userSchema=mongoose.Schema({
         required:true
     },
     profile:{
-        type:String
+        type:String,
+        default:"profile.webp"
     },
     role:{
-        type:String,
+        type:String, 
         default:"user",
-
-    }
+    },
+    isblocked:{
+        type:Boolean,
+        default:false
+    },
 },{timestamps:true})
 
 

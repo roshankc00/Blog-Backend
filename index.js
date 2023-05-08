@@ -5,7 +5,7 @@ const dotenv=require('dotenv').config()
 // all the routes import
 const userRoute=require('./routes/userRoute')
 const blogRoute=require('./routes/blogRoute')
-
+const commentRoute=require('./routes/commentRoute')
 // rest variables 
 const app=express()
 const PORT=process.env.PORT
@@ -23,6 +23,7 @@ app.use(express.static('public/upload'))
 // routes
 app.use('/api/v1/user',userRoute)  
 app.use('/api/v1/blog',blogRoute)  
+app.use('/api/v1/comment',commentRoute)  
 
 
 
