@@ -16,4 +16,4 @@ const Comment=mongoose.model('comment',commentSchema)
 
 module.exports=Comment
 
-// commnted post chaiyo kun ma hanya ho 
+// user chai yei xa ku blog ma cmt hana ko 

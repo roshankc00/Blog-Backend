@@ -3,22 +3,19 @@ const Comment = require("../models/commentModel")
 
 const createComment=async(req,res)=>{
     const {comment,id}=req.body
-    console.log(comment);
     try {
         const commentposted=await Comment.create({
             comment,
             user:req.user.id
         })
-        console.log(commentposted);
         res.status(200).json({
             sucess:true,
             message:"comment added to the database",
             commentposted
         })
         const post=await Blog.findByIdAndUpdate(id,{
-            $push:{comments:commentposted}
+            $push:{comments:commentposted.id}
         })
-        console.log(post);
 
     } catch (error) {
         res.status(500).json({
@@ -88,14 +85,20 @@ const updateComment=async(req,res)=>{
 
 
 const deleteComment=async(req,res)=>{
-    const id=req.params.id
-    try {
-        const deletedComment=await Comment.findByIdAndDelete(id)
+    const {id}=req.body
 
+    try {
+        const post=await Blog.findById(id)
+        const deleteone=await Blog.findByIdAndUpdate(id,{
+            $pull:{comments:req.params.id}
+        },{new:true})
+        const deletedComment=await Comment.findByIdAndDelete(req.params.id)
+        
         res.status(200).json({
             message:true,
             message:"deleted Sucessfully",
-            deletedComment
+            deletedComment,
+
         })
         
     } catch (error) {
