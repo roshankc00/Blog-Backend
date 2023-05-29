@@ -96,7 +96,7 @@ const deleteBlogs=async(req,res)=>{
 // getall the blogs 
 const getAllBlogs=async(req,res)=>{
     try {
-        const blogs=await Blog.find({})
+        const blogs=await Blog.find({}).populate('comments').populate('user')
         return res.status(200).json({
             sucess:true,
             message:"blog has been added sucessfully",
@@ -119,7 +119,7 @@ const getAllBlogs=async(req,res)=>{
 const getaBlog=async(req,res)=>{
     const id=req.params.id
     try {
-        const blog=await Blog.findById(id)
+        const blog=await Blog.findById(id).populate('comments').populate('user')
         if(!blog){
             return res.status(400).json({
                 sucess:false,
